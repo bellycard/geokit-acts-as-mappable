@@ -1,47 +1,18 @@
 # WARNING
 
-This gem is an attempt to port [Andre Lewis' great **geokit-rails**](https://github.com/andre/geokit-gem) to Rails 3.
-
-It is not finished. Some parts of the original plugin remain absolutely untouched or untested.
-
-What has been done :
-
-* the Rails 2 plugin has been transformed to a Rails 3 plugin, in a gem
-* the Rails 3 conventions and APIs and best practices have been followed (hopefully)
-* the basic features have been ported to use the new ActiveRecord 3 query syntax
-* the test suite has been updated to use the new query methods
-* the test suite pass for all the features that have been ported
-* this README has been updated for what is working and tested
-
-What hasn't been done (yet) :
-
-* make it possible to use the `where` scope with a clause on the distance column
-* port the IpGeocodeLookup module (the test suite is disabled)
-* obviously, make the test suite pass for all the features that have not been ported yet
-* update this README to reflect other changes that could have appeared with Rails 3
-
-In short, this gem is **not a drop-in replacement** for the Andre's plugin :
-
-1. it is usable for the basic features. It there are some bugs on these features,
-I'll try the best I can to fix them.
-
-2. it is not yet a full replacement of the geokit-rails plugin ;
-some features have been ported, but the syntax has changed, and some have not been ported.
+This gem is an attempt to port [Andre Lewis' great **geokit-rails**](https://github.com/andre/geokit-gem) to Any Framework which uses ActiveRecord.
 
 ## INSTALLATION
 
-Geokit for Rails consists of a generic Gem ([geokit-gem](https://github.com/andre/geokit-gem)) and a Rails plugin ([geokit-rails3](https://github.com/jlecour/geokit-rails3)).
+You just have to add the 'geokit-acts-as-mappable' gem to your Gemfile
 
-Make sure you use a version >= 3.0 of Rails.
-
-You just have to add the 'geokit-rails3' gem to your Gemfile
-
-    gem 'geokit-rails3'
+    gem 'geokit-acts-as-mappable', :git => 'git@github.com:alexyakubenko/geokit-acts-as-mappable.git', :tag => '0.0.2'
 
 Then tell bundler to update the gems :
 
     $ bundle install
 
+If you want to use geokit-acts-as-mappable in a Rails 3 application, just use the good plugin ([geokit-rails3](https://github.com/jlecour/geokit-rails3)).
 If you want to use geokit-rails in a Rails 2 application, just use the good old plugin ([geokit-rails](https://github.com/andre/geokit-rails)).
 
 
@@ -54,10 +25,6 @@ Geokit provides key functionality for location-oriented Rails applications:
   between them.
 - ActiveRecord distance-based finders. For example, you can find all the points
   in your database within a 50-mile radius.
-- IP-based location lookup utilizing hostip.info. Provide an IP address, and get
-  city name and latitude/longitude in return
-- A before_filter helper to geocoder the user's location based on IP address,
-  and retain the location in a cookie.
 - Geocoding from multiple providers. It provides a fail-over mechanism, in case
   your input fails to geocode in one service. Geocoding is provided by the Geokit
   gem, which you must have installed
@@ -336,29 +303,6 @@ Ordering is done through `Geokit::Geocoders::provider_order` and
 `config/initializers/geokit_config.rb`. If you don't already have a
 `geokit_config.rb` file, the plugin creates one when it is first installed.
 
-
-## IP GEOCODING HELPER
-
-A class method called geocode_ip_address has been mixed into the
-ActionController::Base.  This enables before_filter style lookup of
-the IP address.  Since it is a filter, it can accept any of the
-available filter options.
-
-Usage is as below:
-
-    class LocationAwareController < ActionController::Base
-      geocode_ip_address
-    end
-
-A first-time lookup will result in the GeoLoc class being stored
-in the session as `:geo_location` as well as in a cookie called
-`:geo_session`.  Subsequent lookups will use the session value if it
-exists or the cookie value if it doesn't exist.  The last resort is
-to make a call to the web service.  Clients are free to manage the
-cookie as they wish.
-
-The intent of this feature is to be able to provide a good guess as
-to a new visitor's location.
 
 ## INTEGRATED FIND AND GEOCODING
 
