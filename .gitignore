@@ -35,3 +35,7 @@ doc
 
 # For MacOS:
 .DS_Store
+
+# For RubyMine
+.idea
+
