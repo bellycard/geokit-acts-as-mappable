@@ -2,7 +2,7 @@
 require File.expand_path("../lib/geokit-acts-as-mappable/version", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "geokit-rails3"
+  s.name        = "geokit-acts-as-mappable"
   s.version     = GeokitActsAsMappable::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Andre Lewis", "Bill Eisenhauer", "Jeremy Lecour", "Alexandr Yakubenko"]
