@@ -19,7 +19,7 @@ module Geokit
           cattr_accessor :through
           self.through = options[:through]
 
-          if reflection = Geokit::ActsAsMappable.end_of_reflection_chain(self.through, self)
+          if (reflection = Geokit::ActsAsMappable.end_of_reflection_chain(self.through, self))
             metaclass.instance_eval do
               [ :distance_column_name, :default_units, :default_formula, :lat_column_name, :lng_column_name, :qualified_lat_column_name, :qualified_lng_column_name ].each do |method_name|
                 define_method method_name do
@@ -278,8 +278,8 @@ module Geokit
 
     # this is the callback for auto_geocoding
     def auto_geocode_address
-      address=self.send(auto_geocode_field).to_s
-      geo=Geokit::Geocoders::MultiGeocoder.geocode(address)
+      address = self.send(auto_geocode_field).to_s
+      geo = Geokit::Geocoders::MultiGeocoder.geocode(address)
 
       if geo.success
         self.send("#{lat_column_name}=", geo.lat)
@@ -300,10 +300,10 @@ module Geokit
           association, through = through, nil
         end
 
-        if reflection = klass.reflect_on_association(association)
-          klass = reflection.klass
+        if (reflection = klass.reflect_on_association(association))
+          klass = "::#{ reflection.class_name }".constantize
         else
-          raise ArgumentError, "You gave #{association} in :through, but I could not find it on #{klass}."
+          raise ArgumentError, "You gave #{ association } in :through, but I could not find it on #{ klass }."
         end
       end
 
