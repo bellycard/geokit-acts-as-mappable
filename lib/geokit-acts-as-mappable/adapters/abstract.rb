@@ -3,7 +3,7 @@ module Geokit
     class Abstract
       class NotImplementedError < StandardError ; end
       
-      cattr_accessor :loaded
+      attr_accessor :loaded
       
       class << self
         def load(klass) ; end
