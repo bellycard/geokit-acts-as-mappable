@@ -106,7 +106,7 @@ module Geokit
       end
 
       def geo_scope(options = {})
-        arel = self.is_a?(ActiveRecord::Relation) ? self : self.scoped
+        arel = self.is_a?(ActiveRecord::Relation) ? self : self.where(nil)
 
         origin  = extract_origin_from_options(options)
         units   = extract_units_from_options(options)
